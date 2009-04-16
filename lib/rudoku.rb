@@ -8,7 +8,7 @@ class Rudoku
           7 => true, 8 => true, 9 => true, }
 
   class Board
-    attr_accessor :fields, :blocks, :rows, :cols
+    attr_reader :fields, :blocks, :rows, :cols
 
     def initialize(board)
       @fields = []
@@ -35,11 +35,18 @@ class Rudoku
         @board[y] = []
 
         row.each_with_index do |value, x|
-          f = @board[y][x] = Field.new(self, x, y)
+          f = Field.new(self, x, y)
           f.value = value
+
+          @board[y][x] = f
           @fields << f
           @missing << f if f.missing?
         end
+      end
+
+      # initialize the helper constructs
+      @blocks.each do |block|
+        block.initialize_area()
       end
 
       @stats[:missing] = @missing.length
@@ -62,7 +69,6 @@ class Rudoku
           #puts "#{f} hat #{nrs.length} möglichkeiten: #{nrs.join(" ")}" if nrs.length == 2
           #f.mark if nrs.length ==2
           if nrs.length == 1
-            #puts "ONLY: nur noch #{ nrs.first } moeglich in feld #{ f }"
             @stats[:solved_by_only_one_possible] += 1
             #f.mark
             f.value = nrs.first
@@ -72,9 +78,7 @@ class Rudoku
             # returns false or true
 
             if v = f.nr_only_possible_in_this_field
-              f.mark
-              raise "in #{f} is only #{v} possible"
-              #puts "SCANNING: nr #{ v } ist nur noch im feld #{ f }"
+              # f.mark
               @stats[:solved_by_no_other_possible] += 1
               f.value = v
               #f.mark
@@ -290,11 +294,8 @@ class Rudoku
        #puts "#{type} #{mode} #{v} available_nrs contains #{@available_nrs.join(", ")}"
     end
 
+    # TODO: this could be cached/resued/
     def missing_fields
-      if fields.nil?
-        initialize_area
-      end
-
       fields.reject{|f| not f.missing?}
     end
   end
@@ -322,7 +323,8 @@ class Rudoku
   end
 
   class Block < Area
-    attr_reader :fields
+    attr_accessor :fields
+
     def initialize(b, n)
       @n = n
       @x = n % 3

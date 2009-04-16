@@ -1,4 +1,4 @@
-require 'rudoku'
+require 'lib/rudoku'
 
 X = nil
 R1 = [
@@ -208,7 +208,7 @@ RDIFF = [
 [X, 3, X, X, 8, X, X, 9, X ],
 [X, X, 7, X, X, X, X, X, 2 ]]
 
-f = Sudoku::Board.new(RDIFF)
+f = Rudoku::Board.new(R1)
 
 f.print_field
 
