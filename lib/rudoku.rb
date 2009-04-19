@@ -31,16 +31,18 @@ class Rudoku
         @blocks[i] = Block.new(self, i)
       end
 
+      i = 0
       board.each_with_index do |row, y|
         @board[y] = []
 
         row.each_with_index do |value, x|
-          f = Field.new(self, x, y)
+          f = Field.new(self, i, x, y)
           f.value = value
 
           @board[y][x] = f
           @fields << f
           @missing << f if f.missing?
+          i += 1
         end
       end
 
@@ -192,10 +194,11 @@ class Rudoku
   end
 
   class Field
-    attr_reader :x, :y, :value, :block
+    attr_reader :index, :x, :y, :value, :block
 
-    def initialize(board, x, y)
+    def initialize(board, i, x, y)
       @board = board
+      @index = i
       @x = x
       @y = y
       @marked = false
