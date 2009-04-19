@@ -341,8 +341,8 @@ class Rudoku
 
       @fields = []
 
-      f_x.upto(f_x + 2) do |x|
-        f_y.upto(f_y + 2) do |y|
+      f_y.upto(f_y + 2) do |y|
+        f_x.upto(f_x + 2) do |x|
           @fields << board.get(x, y)
         end
       end
