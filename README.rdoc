@@ -1,0 +1,7 @@
+= rudoku
+
+Rudoku is a simple Sudoku solver.
+
+== Copyright
+
+Copyright (c) 2009 Reto Schüttel
