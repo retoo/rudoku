@@ -2,6 +2,8 @@
 
 # Please contact me if you like this released under a OSS license!
 
+require 'enumerator'
+
 class Rudoku
   NRS = { 1 => true, 2 => true, 3 => true,
           4 => true, 5 => true, 6 => true,
@@ -9,6 +11,19 @@ class Rudoku
 
   class Board
     attr_reader :fields, :blocks, :rows, :cols
+    NON_VALID = /[^0-9_]/
+    def self.from_string(input)
+      # remove whitespaces, convert numbers to int and underscores to nils.
+      input = input.scan(/./).reject{|c| c.match(NON_VALID)}.map{|c| c == "_" ? nil : c.to_i}
+
+      board = Board.new(input)
+
+      return board
+    end
+
+    def self.from_array(array)
+      Board.new(array)
+    end
 
     def initialize(board)
       @fields = []
@@ -32,7 +47,9 @@ class Rudoku
       end
 
       i = 0
-      board.each_with_index do |row, y|
+      y = 0
+      board.each_slice(9) do |row|
+
         @board[y] = []
 
         row.each_with_index do |value, x|
@@ -44,6 +61,8 @@ class Rudoku
           @missing << f if f.missing?
           i += 1
         end
+
+        y += 1
       end
 
       # initialize the helper constructs
