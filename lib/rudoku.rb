@@ -54,6 +54,7 @@ class Rudoku
 
         row.each_with_index do |value, x|
           f = Field.new(self, i, x, y)
+          f.state = :preset
           f.value = value
 
           @board[y][x] = f
@@ -202,6 +203,7 @@ class Rudoku
   end
 
   class Field
+    attr_accessor :state
     attr_reader :index, :x, :y, :value, :block
 
     def initialize(board, i, x, y)
@@ -210,6 +212,7 @@ class Rudoku
       @x = x
       @y = y
       @marked = false
+      @state = :open
 
       @row   = @board.get_row(y) or raise
       @col   = @board.get_col(x) or raise
