@@ -71,12 +71,11 @@ class Rudoku
       end
 
       @stats[:missing] = @missing.length
-
       @counter = 0
+      @missing.sort!{|a, b| a.available_nrs.length <=> b.available_nrs.length}
 
       raise "Invalid field" if not valid_field?
     end
-
 
     def pre_solve
       begin
