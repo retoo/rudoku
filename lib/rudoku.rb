@@ -161,29 +161,11 @@ class Rudoku
 
           print "#{t} "
 
-          #if p.any?{|o| x == o.x && y == o.y}
-          #  print "#{f}<"
-          #else
-          #  print "#{f} "
-          #end
           print " " if x % 3 == 2
         end
         puts
         puts if y % 3 == 2
       end
-
-      #puts "Lösung"
-      #0.upto(8) do |i|
-      # print "#{@board[i][i].value} "
-      #end
-     #puts
-
-      #puts
-      puts "Stats"
-      @stats.each do |key, value|
-        puts "#{key}: #{value}"
-      end
-
     end
 
     def valid_field?
@@ -207,9 +189,6 @@ class Rudoku
       @blocks[block_nr] or raise "Unitialized block at #{x}/#{y} block_nr #{block_nr}"
     end
 
-    def find_first_missing
-      @fields.find{|f| f.missing?}
-    end
   end
 
   class Field
