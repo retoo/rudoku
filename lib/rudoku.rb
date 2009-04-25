@@ -158,11 +158,8 @@ class Rudoku
       end
     end
 
-    def print_field(p = [])
-      p = [p] unless p.kind_of?(Array)
-
+    def print_field()
       @board.each_with_index do |row, y|
-        #row.map{|f| f.value}.map{|f| f || "_"}.each_with_index do |f, x|
         row.each_with_index do |f, x|
           t = ( f.value ? f.value.to_s : "_" ) + ( f.marked? ? "<" : " " )
 
