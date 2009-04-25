@@ -150,6 +150,13 @@ class Rudoku
       return false
     end
 
+    def print_stats
+      puts "Stats"
+      @stats.each do |key, value|
+        puts "#{key}: #{value}"
+      end
+    end
+
     def print_field(p = [])
       p = [p] unless p.kind_of?(Array)
 
@@ -169,6 +176,10 @@ class Rudoku
 
     def valid_field?
       true
+    end
+
+    def solved?()
+      @missing.empty?
     end
 
     def get(x, y)
