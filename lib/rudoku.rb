@@ -21,8 +21,8 @@ class Rudoku
       return board
     end
 
-    def self.from_array(array)
-      Board.new(array)
+    def self.from_nested_array(array)
+      Board.new(array.flatten())
     end
 
     def initialize(board)
