@@ -151,24 +151,24 @@ class Rudoku
       return false
     end
 
-    def print_stats
-      puts "Stats"
+    def print_stats(fh=$stdout)
+      fh.puts "# Stats"
       @stats.each do |key, value|
-        puts "#{key}: #{value}"
+        fh.puts "# #{key}: #{value}"
       end
     end
 
-    def print_field()
+    def print_field(fh=$stdout)
       @board.each_with_index do |row, y|
         row.each_with_index do |f, x|
           t = ( f.value ? f.value.to_s : "_" ) + ( f.marked? ? "<" : " " )
 
-          print "#{t} "
+          fh.print "#{t} "
 
-          print " " if x % 3 == 2
+          fh.print " " if x % 3 == 2
         end
-        puts
-        puts if y % 3 == 2
+        fh.puts
+        fh.puts if y % 3 == 2
       end
     end
 
